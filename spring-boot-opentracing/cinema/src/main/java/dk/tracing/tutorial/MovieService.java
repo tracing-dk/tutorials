@@ -17,7 +17,7 @@ public class MovieService {
 
     @HystrixCommand(fallbackMethod = "reliable")
     public String movieList() {
-        URI uri = URI.create("http://localhost:8090/movies");
+        URI uri = URI.create("http://distributor:8090/movies");
 
         return this.restTemplate.getForObject(uri, String.class);
     }
