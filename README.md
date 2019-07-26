@@ -11,6 +11,7 @@ This repository demonstrates the usage of OpenTracing to implement distributed t
 1. Backend ([spring-boot-opentracing](spring-boot-opentracing)) instrumentation using Jaeger Tracing.
 2. Frontend ([react-client](react-client)) instrumentation using OpenZipkin and connecting the traces from backend.
 3. Replacing the tracing system in O(1) when using OpenTracing. The example Spring Boot project switching from Jaeger to Zipkin ([vendor-independent-spring-boot](vendor-independent-spring-boot)).
+4. Deploying ([kubernetes-spring-boot-opentracing](kubernetes-spring-boot-opentracing)) an instrumented Spring Boot project together with Jaeger in Kubernetes.
 
 ## About
 
