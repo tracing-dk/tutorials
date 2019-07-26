@@ -1,0 +1,79 @@
+# Cinema deployment and service
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cinema
+  labels:
+    app: cinema
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cinema
+  template:
+    metadata:
+      labels:
+        app: cinema
+    spec:
+      containers:
+      - name: cinema
+        image: cudk/tracing-example-cinema-service:v1
+        ports:
+        - containerPort: 8080
+        args: ["--opentracing.jaeger.udp-sender.host=jaeger-agent"]
+        imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cinema
+  labels:
+    app: cinema
+spec:
+  type: NodePort
+  ports:
+    - port: 8080
+  selector:
+    app: cinema
+
+
+
+# Deployment deployment and service
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: distributor
+  labels:
+    app: distributor
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: distributor
+  template:
+    metadata:
+      labels:
+        app: distributor
+    spec:
+      containers:
+      - name: distributor
+        image: cudk/tracing-example-distributor-service:v1
+        ports:
+        - containerPort: 8090
+        args: ["--opentracing.jaeger.udp-sender.host=jaeger-agent"]
+        imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: distributor
+  labels:
+    app: distributor
+spec:
+  type: NodePort
+  ports:
+    - port: 8090
+  selector:
+    app: distributor
